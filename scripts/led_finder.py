@@ -11,6 +11,7 @@ from math import *
 from std_msgs.msg import String
 import cv2
 import numpy as np
+import cv2.cv as cv
 
 def track_color():
 	''' captures frame from webcame, creates thresholded and gaussian blur images '''
@@ -19,7 +20,7 @@ def track_color():
 
 	gaussian_images = []
 
-	img_HSV = cv2.cvtColor(cimg, cv2.CV_BGR2HSV)
+	img_HSV = cv2.cvtColor(cimg, cv.CV_BGR2HSV)
 
 	red_Threshed = cv2.inRange(img_HSV, np.array((2,50, 50)), np.array((8,170,200)))
 	red_gaussian = cv2.GaussianBlur(red_Threshed, (9,9), 2, 2)
