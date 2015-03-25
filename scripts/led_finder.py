@@ -5,13 +5,18 @@ LED Finder script for SCOPE Boeing
 Takes camera video feed as input, outputs pixel locations of LEDs as ROS messages
 """
 
-import roslib
+import roslib; roslib.load_manifest('led_localization')
 import rospy
-from math import *
+import roslib
+
 from std_msgs.msg import String
+from led_localization.msg import *
+
 import cv2
 import numpy as np
 import cv2.cv as cv
+
+from math import *
 
 def track_color():
 	''' captures frame from webcame, creates thresholded and gaussian blur images '''
@@ -52,9 +57,12 @@ def find_location(image):
 def pub_led_location(led_array):
 	"""Publishes all the pixel locations of the LED from an array"""
 	r = rospy.Rate(100)
-	#pub = rospy.Publisher('cmd_vel', Twist, queue_size=10)
+	pub = rospy.Publisher('beacon_locals', beacons, queue_size=10)
+	msg = beacons()
 
-	pass
+	msg.red_beacon = 1
+	msg.blue_beacon = 2
+	msg.green_beacon = 3
 
 	pub.publish(msg)
 	r.sleep()
@@ -62,7 +70,8 @@ def pub_led_location(led_array):
 
 if __name__ == "__main__":
 	#rospy.init_node('neato_controller', anonymous=True)
-	cap = cv2.VideoCapture(0)
+	cap = cv2.VideoCapture(1)
+	rospy.init_node('led_finder')
 
 	while not rospy.is_shutdown():
 
