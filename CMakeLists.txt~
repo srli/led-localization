@@ -8,6 +8,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  sensor_msgs
   cv_bridge
   image_transport
   message_generation
@@ -28,6 +29,7 @@ find_package(catkin REQUIRED COMPONENTS
  generate_messages(
    DEPENDENCIES
    std_msgs
+   sensor_msgs
  )
 
 catkin_package(
@@ -74,7 +76,6 @@ include_directories(
 
 install(DIRECTORY include/${PROJECT_NAME}/
 	DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION})
-
 
 install(FILES package.xml 
 	DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
